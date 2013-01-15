@@ -1,0 +1,14 @@
+{
+  "name": "slugify",
+  "description": "slugify your string",
+  "author": "Petr 'Segeda' Severa <segedacz@gmail.com>",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "3.0.6",
+    "slug": "0.2.2"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  }
+}
