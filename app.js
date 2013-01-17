@@ -15,6 +15,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/json', function(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   if (req.query && req.query.string) {
     if (req.query.separator) {
       var sluged = slug(req.query.string, req.query.separator);
