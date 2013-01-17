@@ -16,7 +16,11 @@ app.get('/', function(req, res) {
 
 app.get('/json', function(req, res) {
   if (req.query && req.query.string) {
-    var sluged = slug(req.query.string);
+    if (req.query.separator) {
+      var sluged = slug(req.query.string, req.query.separator);
+    } else {
+      var sluged = slug(req.query.string);
+    }
     
     if (req.query.lu === 'l') {
       sluged = sluged.toLowerCase();
