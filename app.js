@@ -4,36 +4,34 @@ var express = require('express'),
 
 var app = express();
 
-var rawBodyParser = function(req, res, next) {
-  req.setEncoding('utf8');
-  req.rawBody = '';
-  req.on('data', function(chunk) {
-    req.rawBody += chunk;
-  });
-  req.on('end', function(){
-    next();
-  });
-}
-app.configure(function(){
+app.configure(function() {
   app.set('port', process.env.PORT || 3000);
   app.use(express.favicon(__dirname + '/public/favicon.ico'));
-  app.use(express.logger('dev'));
-
-  app.use(rawBodyParser);
-});
-
-app.configure('development', function(){
-  app.use(express.errorHandler());
+  app.use(express.bodyParser());
 });
 
 app.get('/', function(req, res) {
   res.sendfile('index.html');
 });
 
-app.post('/', function(req, res) {
-  res.send(slug(req.rawBody));
+app.get('/json', function(req, res) {
+  if (req.query && req.query.string) {
+    var sluged = slug(req.query.string);
+    
+    if (req.query.lu === 'l') {
+      sluged = sluged.toLowerCase();
+    }
+    
+    if (req.query.lu === 'U') {
+      sluged = sluged.toUpperCase();
+    }
+    
+    res.json({slug: sluged});
+  } else {
+    res.json();
+  }
 });
 
-http.createServer(app).listen(app.get('port'), function(){
+http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));
 });
