@@ -1,11 +1,13 @@
 var express = require('express'),
     http = require('http'),
-    slug = require('slug');
+    slug = require('slug'),
+    path = require('path');
 
 var app = express();
 
 app.configure(function() {
   app.set('port', process.env.PORT || 3000);
+  app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.favicon(__dirname + '/public/favicon.ico'));
   app.use(express.bodyParser());
 });
