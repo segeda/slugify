@@ -1,19 +1,20 @@
 var express = require('express'),
+    favicon = require('serve-favicon'),
+    serveStatic = require('serve-static'),
+    bodyParser = require('body-parser'),
     http = require('http'),
     slug = require('slug'),
     path = require('path');
 
 var app = express();
 
-app.configure(function() {
-  app.set('port', process.env.PORT || 3000);
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.use(express.favicon(__dirname + '/public/favicon.ico'));
-  app.use(express.bodyParser());
-});
+app.set('port', process.env.PORT || 3000);
+app.use(serveStatic(path.join(__dirname, 'public')));
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function(req, res) {
-  res.sendfile('index.html');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/json', function(req, res) {
